@@ -89,7 +89,11 @@ public class RestaurantController {
 	}
 
 	// TODO: Task 4 - request handler
+<<<<<<< HEAD
 	@GetMapping(path="restaurant/{restaurant_id}")
+=======
+	@GetMapping(path="restaurant/{restaurant_id}", consumes=MediaType.APPLICATION_JSON_VALUE)
+>>>>>>> e886cbd (final)
 	public ResponseEntity<String> getRestaurantById(@PathVariable("restaurant_id") String id){
 
 		Optional<Restaurant> retrievedData = rSvc.getRestaurantById(id);
@@ -100,7 +104,11 @@ public class RestaurantController {
 				.status(HttpStatus.NOT_FOUND)
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(Json.createObjectBuilder()
+<<<<<<< HEAD
 						.add("status", 404)
+=======
+						.add("status", HttpStatus.NOT_FOUND.value())
+>>>>>>> e886cbd (final)
 						.add("error", "Missing  %s".formatted(id))
 						.build().toString()
 						);

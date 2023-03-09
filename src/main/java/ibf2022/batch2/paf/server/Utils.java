@@ -19,7 +19,7 @@ public class Utils {
     //for task 3
     public static Restaurant fromDocToRestaurant(Document doc) {
         Restaurant restaurant = new Restaurant();
-        restaurant.setRestaurantId(doc.getString(FIELD_RESTAURANT_ID).toString());
+        restaurant.setRestaurantId(doc.getString(FIELD_RESTAURANT_ID));
         restaurant.setName(doc.getString(FIELD_NAME));
         return restaurant;
 
@@ -28,7 +28,7 @@ public class Utils {
     //also task 3
     public static JsonObject returnTask3(Restaurant rest){
         return Json.createObjectBuilder()
-        .add(FIELD_RESTAURANT_ID, rest.getRestaurantId())
+        .add("restaurantId", rest.getRestaurantId())
         .add(FIELD_NAME, rest.getName())
         .build();
     }

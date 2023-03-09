@@ -13,6 +13,8 @@ import ibf2022.batch2.paf.server.models.Comment;
 import ibf2022.batch2.paf.server.models.Restaurant;
 import ibf2022.batch2.paf.server.repositories.RestaurantRepository;
 
+import static ibf2022.batch2.paf.server.Utils.*;
+
 @Service
 public class RestaurantService {
 
@@ -26,9 +28,9 @@ public class RestaurantService {
 		List<String> list = crusineList.stream()
 					.map(v -> v.replace("/", "_"))
 					.collect(Collectors.toList());
-		for (String i : list) {
-			System.out.printf("cruisine @ service>>> %s %n", i);
-		}
+		// for (String i : list) {
+		// 	System.out.printf("cruisine @ service>>> %s %n", i);
+		// }
 		return list;
 	}
 
@@ -41,6 +43,7 @@ public class RestaurantService {
 	// TODO: Task 4 
 	// Do not change the method's signature
 	public Optional<Restaurant> getRestaurantById(String id) {
+		// validate(id);
 		return rRepo.getRestaurantById(id);
 	}
 
