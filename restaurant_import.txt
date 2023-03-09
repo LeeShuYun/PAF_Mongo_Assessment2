@@ -1,1 +1,4 @@
 TODO: Task 1 - Write the mongo import command here
+mongoimport mongodb://localhost:27017 -d restdb -c restaurant --jsonArray --file ./restaurants.json --drop
+
+mongoimport --uri mongodb://mongo:rdZHyBzCLy1As99NPxdv@containers-us-west-38.railway.app:7616 -d restdb -c restaurant --jsonArray --file ./restaurants.json --drop --authenticationDatabase=admin
