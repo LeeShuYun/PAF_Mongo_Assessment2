@@ -35,18 +35,18 @@ public class RestaurantService {
 	// TODO: Task 3 
 	// Do not change the method's signature
 	public List<Restaurant> getRestaurantsByCuisine(String cuisine) {
-		
 		return rRepo.getRestaurantsByCuisine(cuisine);
 	}
 
 	// TODO: Task 4 
 	// Do not change the method's signature
 	public Optional<Restaurant> getRestaurantById(String id) {
-		return null;
+		return rRepo.getRestaurantById(id);
 	}
 
 	// TODO: Task 5 
 	// Do not change the method's signature
 	public void postRestaurantComment(Comment comment) {
+		rRepo.insertRestaurantComment(comment);
 	}
 }
