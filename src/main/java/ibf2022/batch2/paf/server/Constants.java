@@ -17,4 +17,9 @@ public class Constants {
     public static final String FIELD_COMMENT_RATING = "rating";
     public static final String FIELD_COMMENT_RESTAURANTID = "restaurant_id";
     
+    public static final String FIELD_COMMENTNEST_TEXT = "comments.comment";
+    public static final String FIELD_COMMENTNEST_DATE = "comments.date";
+    public static final String FIELD_COMMENTNEST_NAME = "comments.name";
+    public static final String FIELD_COMMENTNEST_RATING = "comments.rating";
+    public static final String FIELD_COMMENTNEST_RESTAURANTID = "comments.restaurant_id";
 }

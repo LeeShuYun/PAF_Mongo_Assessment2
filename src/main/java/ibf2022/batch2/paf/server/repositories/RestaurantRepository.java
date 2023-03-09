@@ -64,9 +64,7 @@ public class RestaurantRepository {
 			pipeline, COLLECTION_RESTAURANT, Document.class);
 			List<Document> list = results.getMappedResults();
 			
-			// for (Document document : list) {
-			// 	document.
-			// }
+
 			List<Restaurant> restList = list.stream()
 											.map (v -> fromDocToRestaurant(v))
 											.toList();
@@ -78,22 +76,40 @@ public class RestaurantRepository {
 	// TODO: Task 4 
 	// Do not change the method's signature
 	// Write the MongoDB query for this method in the comments below
-	// db.games.find({_id: ObjectId("63ea65df0f0c43442f8adf2d")});
+	// db.restaurant.aggregate([
+	// 	{
+	// 		$match: { restaurant_id: "40392724" }
+	// 	},
+	// 	{
+	// 		$lookup: {
+	// 			from: "comments",
+	// 			localField: "restaurant_id",
+	// 			foreignField: "restaurant_id",
+	// 			as: "comments"
+	// 		}
+	// 	}
+	// ])
 	public Optional<Restaurant> getRestaurantById(String id) {
 		try {
-			Criteria criteria = Criteria.where(FIELD_RESTAURANT_ID).is(id);
-			Query query = Query.query(criteria);
+			MatchOperation matchRated= Aggregation.match(Criteria.where(FIELD_RESTAURANT_ID).is(id));
+			LookupOperation lookupTo = Aggregation.lookup(
+                COLLECTION_COMMENT,
+            	FIELD_RESTAURANT_ID,
+                FIELD_RESTAURANT_ID,
+                "comments");
 
+				Aggregation pipeline = Aggregation.newAggregation(
+					matchRated, lookupTo);
+			AggregationResults<Document> results = template.aggregate(
+					pipeline, COLLECTION_RESTAURANT, Document.class);
+			List<Document> doc = results.getMappedResults();
 
-			//todo: can I change Document.class to something else --> Nope
-			Document document = template.findOne(query, Document.class, COLLECTION_RESTAURANT);
-			
-			Restaurant restt = fromDocToRestaurant(document);
+			Restaurant restt = fromDocToRestaurant(doc.get(0));
 
 			return Optional.ofNullable(restt);
 
-		} catch (IllegalArgumentException e) {
-				return Optional.empty();
+			} catch (IllegalArgumentException e) {
+					return Optional.empty();
 			}
 		
 	}
@@ -111,16 +127,13 @@ public class RestaurantRepository {
 	public void insertRestaurantComment(Comment comment) {
 		//convert to document
 		
-		
-
 		Document doc = fromCommentToDoc(comment);
 		Document commentDoc = template.insert(doc, COLLECTION_COMMENT);
 
-		// ObjectId id = newDoc.getObjectId;
-
-		// Query query = Query.query(Criteria.where(FIELD_RESTAURANT_ID).is(comment.getRestaurantId()));
-
-		// Update updateOps = new Update().set("comments", 6);
+		// for some reason this doesn't want to work :(
+		// ObjectId id = commentDoc.getObjectId();
+		
+		// return id != null;
 
 		// UpdateResult updateResult = template.update(query, updateOps, Document.class, COLLECTION_COMMENT);
 		// System.out.printf("Doc updated: %d", updateResult.getModifiedCount());

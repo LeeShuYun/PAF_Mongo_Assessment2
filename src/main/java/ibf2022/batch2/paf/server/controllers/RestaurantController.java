@@ -89,9 +89,11 @@ public class RestaurantController {
 	}
 
 	// TODO: Task 4 - request handler
+	@GetMapping(path="restaurant/{restaurant_id}")
 	public ResponseEntity<String> getRestaurantById(@PathVariable("restaurant_id") String id){
 
 		Optional<Restaurant> retrievedData = rSvc.getRestaurantById(id);
+		// JsonObject retrievedJson = fromDocToRestaurantJsonWithComment(retrievedData);
 		
 		if (retrievedData.isEmpty()){
 			return ResponseEntity
@@ -99,22 +101,25 @@ public class RestaurantController {
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(Json.createObjectBuilder()
 						.add("status", 404)
-						.add("error", "Missing  %s ".formatted(id))
+						.add("error", "Missing  %s".formatted(id))
 						.build().toString()
 						);
 		}else{
 			return ResponseEntity
 			.status(HttpStatus.OK)
 			.contentType(MediaType.APPLICATION_JSON)
+			// .body(Json.createObjectBuilder(retrievedJson).build().toString()); 
 			.body(retrievedData.toString()); 
 			
 		}
 	}
 
+
 	// TODO: Task 5 - request handler
-	@PostMapping(path="/restaurant/comment")
+	@PostMapping(path="/restaurant/comment", consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public void postRestaurantComment(@RequestBody Comment comment){
 		// ResponseEntity<String>
+		//wait how do I return appropriate response with no return value from service?? :(
 		rSvc.postRestaurantComment(comment);
 		// Integer isSuccess = rSvc.getCommentById();
 
