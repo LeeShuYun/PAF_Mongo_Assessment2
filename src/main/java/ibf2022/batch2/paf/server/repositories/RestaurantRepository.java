@@ -55,19 +55,24 @@ public class RestaurantRepository {
 	// 	}
 	// ]);
 	public List<Restaurant> getRestaurantsByCuisine(String cuisine) {
-			MatchOperation matchRated = Aggregation.match(
-			Criteria.where(FIELD_CUISINE).is(cuisine));
+			MatchOperation matchRated = Aggregation.match(Criteria.where(FIELD_CUISINE).is(cuisine));
 			ProjectionOperation projectFields = Aggregation
 										.project(FIELD_RESTAURANT_ID, FIELD_NAME)
 										.andExclude("_id");
-			Aggregation pipeline= Aggregation.newAggregation(matchRated, projectFields);
+			Aggregation pipeline = Aggregation.newAggregation(matchRated, projectFields);
 			AggregationResults<Document> results= template.aggregate(
 			pipeline, COLLECTION_RESTAURANT, Document.class);
 			List<Document> list = results.getMappedResults();
-			List<Restaurant> returnedList = list.stream()
+			
+			// for (Document document : list) {
+			// 	document.
+			// }
+			List<Restaurant> restList = list.stream()
 											.map (v -> fromDocToRestaurant(v))
 											.toList();
-			return returnedList;
+			
+
+			return restList;
 	}
 	
 	// TODO: Task 4 
