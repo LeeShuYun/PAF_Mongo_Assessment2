@@ -120,7 +120,7 @@ public class RestaurantRepository {
 	// db.comments.insert({
 	// 	restaurant_id: "40392724",
 	// 	name: "commenter",
-	// 	date: ISODate("2012-10-01T00:00:00.000+0000"),
+	// 	date: new Date(),
 	// 	comment:"alksjdlfja",
 	// 	rating: 8.0
 	// })
